@@ -7,6 +7,32 @@ function App() {
     email: ""
   });
 
+  function combinedHandler(event) {
+    const { name, value } = event.target;
+    // console.log(event.target);
+    setContact((prevValue) => {
+      if (name === "fName") {
+        return {
+          fName: value,
+          lName: prevValue.lName,
+          email: prevValue.email
+        };
+      } else if (name === "lName") {
+        return {
+          fName: prevValue.fName,
+          lName: value,
+          email: prevValue.email
+        };
+      } else if (name === "email") {
+        return {
+          fName: prevValue.fName,
+          lName: prevValue.lName,
+          email: value
+        };
+      }
+    });
+  }
+
   return (
     <div className="container">
       <h1>
@@ -14,9 +40,24 @@ function App() {
       </h1>
       <p>{contact.email}</p>
       <form>
-        <input name="fName" placeholder="First Name" />
-        <input name="lName" placeholder="Last Name" />
-        <input name="email" placeholder="Email" />
+        <input
+          name="fName"
+          onChange={combinedHandler}
+          value={contact.fName}
+          placeholder="First Name"
+        />
+        <input
+          name="lName"
+          onChange={combinedHandler}
+          value={contact.lName}
+          placeholder="Last Name"
+        />
+        <input
+          name="email"
+          onChange={combinedHandler}
+          value={contact.email}
+          placeholder="Email"
+        />
         <button>Submit</button>
       </form>
     </div>
